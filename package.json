@@ -1,0 +1,18 @@
+{
+  "name": "content-sweep-agent-access",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Official public integration examples for Content Sweep remote MCP and REST",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "mcp:discover": "node examples/mcp-discovery.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "^3.25.0"
+  }
+}

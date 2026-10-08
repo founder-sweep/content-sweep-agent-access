@@ -1,0 +1,739 @@
+{
+  "info": {
+    "name": "Content Sweep Agent API",
+    "description": "Generated from OpenAPI. Begin with sandbox enrollment. Set body fields from the guide. Preserve each idempotency key across retries; clear it only for a genuinely new operation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://contentsweep.ai/api/v1"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "capabilities",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/capabilities",
+        "description": "Public capabilities and activation state",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "auth_metadata",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/auth-metadata",
+        "description": "Machine credential authentication metadata (not OAuth)",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "pricing",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/pricing",
+        "description": "Public approved prices and sandbox fixture prices",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "enroll",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/enroll",
+        "description": "Enroll a sandbox organization",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman sandbox\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) pm.environment.set('token', pm.response.json().access_token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "enroll_live",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/enroll/live",
+        "description": "Enroll an accountable live organization; activation gates apply",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "account",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/account",
+        "description": "Inspect account and environment",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "exchange_token",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/tokens",
+        "description": "Exchange for a scoped 15-minute access token",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "rotate_credential",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/credentials/rotate",
+        "description": "Rotate bootstrap credential and invalidate children",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "revoke_credential",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/credentials/{{id}}",
+        "description": "Revoke credential",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "prices",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/billing/prices",
+        "description": "Read environment-specific rate card",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "balance",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/billing/balance",
+        "description": "Read credits; free",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "usage",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/billing/usage",
+        "description": "Read last 100 ledger entries; free",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "purchase",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/billing/purchases",
+        "description": "Purchase credits with MPP card authorization; 402 carries the challenge",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{purchase_key}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount_cents\": 500\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.environment.get('purchase_key')) pm.environment.set('purchase_key', pm.variables.replaceIn('{{$guid}}'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "spending_policy",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/billing/policy",
+        "description": "Set spending limits and optional bounded replenishment mandate",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "rights_holder_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/rights-holders",
+        "description": "Create partner-managed rights holder without login or subscription",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "work_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/works",
+        "description": "Register original work",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "delegation_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/delegations",
+        "description": "Record revocable scoped authority; appointment required for enforcement",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "delegation_revoke",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/delegations/{{id}}",
+        "description": "Irreversibly revoke authority",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "quote_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/quotes",
+        "description": "Create an expiring quote; does not spend or reserve funds",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) pm.environment.set('quote_id', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "operation_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/operations",
+        "description": "Reserve quoted maximum and queue asynchronous work",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{operation_create_key}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quote_id\": \"{{quote_id}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.environment.get('operation_create_key')) pm.environment.set('operation_create_key', pm.variables.replaceIn('{{$guid}}'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "operation_get",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/operations/{{id}}",
+        "description": "Poll work; free",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "case_get",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/cases/{{id}}",
+        "description": "Read tenant-owned case",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "evidence_get",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/evidence/{{id}}",
+        "description": "Export immutable metadata and hash; no media or storage paths",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "packet_get",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/packets/{{id}}",
+        "description": "Read packet and receipt; submission and removal are separate",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "monitor_get",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/monitors/{{id}}",
+        "description": "Read monitor cadence, expiry and budget",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "monitor_pause",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/monitors/{{id}}/pause",
+        "description": "Pause monitoring",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "monitor_resume",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/monitors/{{id}}/resume",
+        "description": "Resume without expanding original budget or expiry",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "webhook_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/webhooks",
+        "description": "Register public HTTPS receiver; signing secret returned once",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "webhook_revoke",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/webhooks/{{id}}",
+        "description": "Revoke receiver",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "webhook_deliveries",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/webhooks/deliveries",
+        "description": "Read last 100 delivery attempts",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "events",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/events",
+        "description": "Read last 100 immutable events",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": []
+    },
+    {
+      "name": "event_replay",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/events/replay",
+        "description": "Replay with stable event ID",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "sandbox_run_create",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/sandbox/runs",
+        "description": "Create illustrative sandbox walkthrough; actual operations use quotes",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    },
+    {
+      "name": "sandbox_run_advance",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/sandbox/runs/{{id}}",
+        "description": "Advance illustrative sandbox walkthrough",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.contentsweep/agent-access",
+  "title": "Content Sweep",
+  "description": "Prepaid copyright investigation and authorized enforcement, with a free agent sandbox.",
+  "version": "1.0.0",
+  "websiteUrl": "https://contentsweep.ai/developers/agents",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://contentsweep.ai/api/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <machine access token>; obtain through /api/v1/enroll",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "sandbox": "https://contentsweep.ai/api/v1/enroll",
+      "openapi": "https://contentsweep.ai/api/v1/openapi.json"
+    }
+  }
+}
